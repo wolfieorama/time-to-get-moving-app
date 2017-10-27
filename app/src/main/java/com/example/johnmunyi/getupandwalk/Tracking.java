@@ -30,6 +30,8 @@ public class Tracking extends AsyncTask<String, String, String> {
     protected void onPostExecute(String s) {
         // send notification to the screen
         super.onPostExecute(s);
+        NotificationFlash myNotify = new NotificationFlash();
+        myNotify.showNotification();
         System.out.println(resp);
     }
 
