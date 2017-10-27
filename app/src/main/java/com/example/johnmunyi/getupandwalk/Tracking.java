@@ -30,6 +30,7 @@ public class Tracking extends AsyncTask<String, String, String> {
     protected void onPostExecute(String s) {
         // send notification to the screen
         super.onPostExecute(s);
+        System.out.println(resp);
     }
 
     @Override

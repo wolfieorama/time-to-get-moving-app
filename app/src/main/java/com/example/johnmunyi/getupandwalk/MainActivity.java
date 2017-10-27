@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String timeSet = timeToTrack.getText().toString();
-
+                Tracking runner = new Tracking();
+                runner.execute(timeSet);
             }
         });
     }
