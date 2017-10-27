@@ -28,7 +28,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="28dp"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:hint="Enter minutes to track"/>
 
             <Button
                 android:id="@+id/setTime"
