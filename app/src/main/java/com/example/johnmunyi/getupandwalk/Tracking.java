@@ -77,9 +77,9 @@ public class Tracking extends AsyncTask<String, String, String> {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,intent, 0);
         builder.setContentIntent(pendingIntent);
-        builder.setVibrate(new long[] {10000, 10000, 10000});
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(1,builder.build());
         System.out.println(resp);
+        builder.setVibrate(new long[] {1000, 1000, 1000});
     }
 }
