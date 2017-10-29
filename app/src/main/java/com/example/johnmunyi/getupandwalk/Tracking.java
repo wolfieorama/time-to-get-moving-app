@@ -11,6 +11,8 @@ import android.os.Vibrator;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.NotificationCompat;
 
+import com.google.android.gms.location.ActivityRecognition;
+
 import static android.content.Context.NOTIFICATION_SERVICE;
 import static android.content.Context.VIBRATOR_SERVICE;
 
@@ -34,7 +36,8 @@ public class Tracking extends AsyncTask<String, String, String> {
         {
             int trackedTime = Integer.parseInt(params[0])*1000;
 
-            while (trackedTime > 0)
+            while (trackedTime > 0 )
+                //&& ActivityRecognizedService.currentActivity == "Still" || ActivityRecognizedService.currentActivity == "Tilting"
             {
                 Thread.sleep(trackedTime);
                 resp = "Slept for " + params[0] + "seconds";

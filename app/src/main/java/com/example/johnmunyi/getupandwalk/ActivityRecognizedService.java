@@ -3,7 +3,7 @@ package com.example.johnmunyi.getupandwalk;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v7.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.location.ActivityRecognitionResult;
@@ -16,6 +16,8 @@ import java.util.List;
  */
 
 public class ActivityRecognizedService extends IntentService {
+
+    static String currentActivity;
     public ActivityRecognizedService()
     {
         super("ActivityRecognizedService");
@@ -30,7 +32,7 @@ public class ActivityRecognizedService extends IntentService {
     {
         if(ActivityRecognitionResult.hasResult(intent)) {
             ActivityRecognitionResult result = ActivityRecognitionResult.extractResult(intent);
-            handleDetectedActivities( result.getProbableActivities() );
+            handleDetectedActivities(result.getProbableActivities());
         }
     }
 
@@ -38,48 +40,58 @@ public class ActivityRecognizedService extends IntentService {
         for( DetectedActivity activity : probableActivities ) {
             switch( activity.getType() ) {
                 case DetectedActivity.IN_VEHICLE: {
+                    if (activity.getConfidence() >= 75){
+                        currentActivity = "In Vehicle";
+                    }
                     Log.e( "ActivityRecogition", "In Vehicle: " + activity.getConfidence() );
                     break;
                 }
                 case DetectedActivity.ON_BICYCLE: {
+                    if (activity.getConfidence() >= 75){
+                        currentActivity = "On Bicycle";
+                    }
                     Log.e( "ActivityRecogition", "On Bicycle: " + activity.getConfidence() );
                     break;
                 }
                 case DetectedActivity.ON_FOOT: {
+                    if (activity.getConfidence() >= 75){
+                        currentActivity = "On Foot";
+                    }
                     Log.e( "ActivityRecogition", "On Foot: " + activity.getConfidence() );
                     break;
                 }
                 case DetectedActivity.RUNNING: {
+                    if (activity.getConfidence() >= 75) {
+                        currentActivity = "Running";
+                    }
                     Log.e( "ActivityRecogition", "Running: " + activity.getConfidence() );
                     break;
                 }
                 case DetectedActivity.STILL: {
-                    Log.e( "ActivityRecogition", "Still: " + activity.getConfidence() );
-                    if( activity.getConfidence() >= 75 ) {
-                        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-                        builder.setContentText( "Are you still?" );
-                        builder.setSmallIcon( R.mipmap.ic_launcher );
-                        builder.setContentTitle( getString( R.string.app_name ) );
-                        NotificationManagerCompat.from(this).notify(0, builder.build());
+                    if(activity.getConfidence() >= 75){
+                        currentActivity = "Still";
                     }
+                    Log.e( "ActivityRecogition", "Still: " + activity.getConfidence() );
                     break;
                 }
                 case DetectedActivity.TILTING: {
+                    if( activity.getConfidence() == 100){
+                        currentActivity = "Tilting";
+                    }
                     Log.e( "ActivityRecogition", "Tilting: " + activity.getConfidence() );
                     break;
                 }
                 case DetectedActivity.WALKING: {
                     Log.e( "ActivityRecogition", "Walking: " + activity.getConfidence() );
                     if( activity.getConfidence() >= 75 ) {
-                        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-                        builder.setContentText( "Are you walking?" );
-                        builder.setSmallIcon( R.mipmap.ic_launcher );
-                        builder.setContentTitle( getString( R.string.app_name ) );
-                        NotificationManagerCompat.from(this).notify(0, builder.build());
+                        currentActivity = "Walking";
                     }
                     break;
                 }
                 case DetectedActivity.UNKNOWN: {
+                    if (activity.getConfidence() >= 75) {
+                        currentActivity = "Unknown";
+                    }
                     Log.e( "ActivityRecogition", "Unknown: " + activity.getConfidence() );
                     break;
                 }
