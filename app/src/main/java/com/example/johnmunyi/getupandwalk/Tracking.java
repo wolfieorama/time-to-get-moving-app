@@ -81,7 +81,7 @@ public class Tracking extends AsyncTask<String, String, String> {
         builder.setSmallIcon(android.R.drawable.ic_dialog_alert);
         builder.setContentTitle("Get up and Walk");
         builder.setContentText("Been seated for too long time has expired");
-        builder.setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND);
+        builder.setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,intent, 0);
