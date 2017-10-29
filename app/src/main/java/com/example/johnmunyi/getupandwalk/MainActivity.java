@@ -1,7 +1,10 @@
 package com.example.johnmunyi.getupandwalk;
 
+import android.app.Notification;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private EditText timeToTrack;
     public GoogleApiClient mApiClient;
     private String timeSet;
+    private Tracking runner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +51,23 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             @Override
             public void onClick(View view) {
                 timeSet = timeToTrack.getText().toString();
-                Tracking runner = new Tracking(getApplicationContext());
+                runner = new Tracking(getApplicationContext());
                 runner.execute(timeSet);
+            }
+        });
+
+        vibrateOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.cancel();
+            }
+        });
+
+        trackingOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                runner.cancel(true);
             }
         });
     }
