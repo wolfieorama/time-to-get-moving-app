@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Vibrator;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.NotificationCompat;
+import android.widget.Toast;
 
 import com.google.android.gms.location.ActivityRecognition;
 
@@ -36,12 +37,17 @@ public class Tracking extends AsyncTask<String, String, String> {
         {
             int trackedTime = Integer.parseInt(params[0])*1000;
 
-            while (trackedTime > 0 )
-                //&& ActivityRecognizedService.currentActivity == "Still" || ActivityRecognizedService.currentActivity == "Tilting"
+            while (trackedTime > 0)
             {
-                Thread.sleep(trackedTime);
-                resp = "Slept for " + params[0] + "seconds";
-                runNotification();
+                if (ActivityRecognizedService.currentActivity == "Still")
+                {
+                    Thread.sleep(trackedTime);
+                    resp = "Slept for " + params[0] + "seconds";
+                    runNotification();
+                }else{
+                    Thread.sleep(trackedTime);
+                }
+
             }
 
         }
